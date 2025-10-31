@@ -65,44 +65,19 @@ struct ContentView: View {
 
     // ViewModel
     func fetchUser() async {
-        guard !username.isEmpty else { return } // Ensure username is not empty
-        isSearching = true
-        do {
-            user = try await getUser(username: username)
-        } catch GitError.invalidURL {
-            print("Invalid URL")
-        } catch GitError.invalidResponse {
-            print("Invalid Response")
-        } catch GitError.invalidData {
-            print("Invalid Data")
-        } catch {
-            print("Unknown Error")
-        }
-        isSearching = false
+        // TODO: Complete this function use try and catch blocks
+
+
+
     }
 }
 
 //GET
 func getUser(username: String) async throws -> GitUser {
-    let endpoint = "https://api.github.com/users/\(username)"
-    
-    guard let url = URL(string: endpoint) else {
-        throw GitError.invalidURL
-    }
-    
-    let (data, response) = try await URLSession.shared.data(from: url)
-    
-    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-        throw GitError.invalidResponse
-    }
-    
-    do {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return try decoder.decode(GitUser.self, from: data)
-    } catch {
-        throw GitError.invalidData
-    }
+    // TODO: Complete this function
+    // Hint: The GitHub API endpoint format is "https://api.github.com/users/{username}"
+    let endpoint = "" 
+
 }
 
 // Model
