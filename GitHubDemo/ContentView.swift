@@ -76,8 +76,10 @@ struct ContentView: View {
 func getUser(username: String) async throws -> GitUser {
     // TODO: Complete this function
     // Hint: The GitHub API endpoint format is "https://api.github.com/users/{username}"
-    let endpoint = "" 
+    let endpoint = ""
 
+    // Remove this placeholder return once you implement the function
+    return GitUser(login: "", avatarUrl: "", bio: "")
 }
 
 // Model
