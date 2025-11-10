@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var user: GitUser? 
+    @State private var user: GitUser?
     @State private var username: String = ""
     @State private var isSearching: Bool = false
-
-
+    
+    
     var body: some View {
         ZStack {
             Color(red: 0.1, green: 0.1, blue: 0.1)
-            .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
                 HStack {
@@ -62,68 +62,80 @@ struct ContentView: View {
             .padding()
         }
     }
-
+    
     // ViewModel
     func fetchUser() async {
         // TODO: Complete this function use try and catch blocks
         isSearching = true
-
-                do {
-                    let fetchedUser = try await getUser(username: username)
-                    user = fetchedUser
-                } catch GitError.invalidURL {
-                    print("Invalid URL")
-                } catch GitError.invalidResponse {
-                    print("Invalid Response")
-                } catch GitError.invalidData {
-                    print("Invalid Data")
-                } catch {
-                    print("Unknown Error: \(error)")
-                }
-
-                isSearching = false
+            defer { isSearching = false }
+            do {
+                let fetchedUser = try await getUser(username: username)
+                user = fetchedUser
+            } catch GitError.invalidURL {
+                print("Invalid URL")
+                user = nil
+            } catch GitError.invalidResponse {
+                print("Invalid Response")
+                user = nil
+            } catch GitError.invalidData {
+                print("Invalid Data")
+                user = nil
+            } catch {
+                print("Unknown Error:", error)
+                user = nil
             }
     }
-
-//GET
-func getUser(username: String) async throws -> GitUser {
-    // TODO: Complete this function
-    // Hint: The GitHub API endpoint format is
-    let endpoint = "https://api.github.com/users/\(username)"
     
-    guard let url = URL(string: endpoint) else {
-        throw GitError.invalidURL
+    //GET
+    func getUser(username: String) async throws -> GitUser {
+        // TODO: Complete this function
+        // Hint: The GitHub API endpoint format is
+        let endpoint = "https://api.github.com/users/\(username)"
+        
+        guard let url = URL(string: endpoint) else {
+            throw GitError.invalidURL
+        }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw GitError.invalidResponse
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        do {
+            struct GitUserOptional: Codable {
+                let login: String
+                let avatarUrl: String
+                let bio: String?
+            }
+            
+            let decodedUser = try decoder.decode(GitUserOptional.self, from: data)
+            return GitUser(
+                login: decodedUser.login,
+                avatarUrl: decodedUser.avatarUrl,
+                bio: decodedUser.bio ?? ""
+            )
+        } catch {
+            throw GitError.invalidData
+        }
     }
     
-    let (data, response) = try await URLSession.shared.data(from: url)
-    
-    guard let httpResponse = response as? HTTPURLResponse,
-          httpResponse.statusCode == 200 else {
-        throw GitError.invalidResponse
+    // Model
+    struct GitUser: Codable {
+        let login: String
+        let avatarUrl: String
+        let bio: String
     }
     
-    let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    
-    do {
-        let decodedUser = try decoder.decode(GitUser.self, from: data)
-        return decodedUser
-    } catch {
-        throw GitError.invalidData
+    enum GitError : Error {
+        case invalidURL
+        case invalidResponse
+        case invalidData
     }
-}
-
-// Model
-struct GitUser: Codable {
-    let login: String
-    let avatarUrl: String
-    let bio: String
-}
-
-enum GitError : Error {
-    case invalidURL
-    case invalidResponse
-    case invalidData
 }
 
 #Preview {

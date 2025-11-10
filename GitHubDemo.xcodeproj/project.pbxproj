@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7F8A118B2CCF356F00D9C02B /* GitHubDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GitHubDemo.app; path = "/Users/kingchhum/Desktop/TACubstart/Spring 2025/Lectures/API/GitHubDemo/build/Debug-iphoneos/GitHubDemo.app"; sourceTree = "<absolute>"; };
-		7F8A119D2CCF357100D9C02B /* GitHubDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GitHubDemoTests.xctest; path = "/Users/kingchhum/Desktop/TACubstart/Spring 2025/Lectures/API/GitHubDemo/build/Debug-iphoneos/GitHubDemo.app/PlugIns/GitHubDemoTests.xctest"; sourceTree = "<absolute>"; };
-		7F8A11A72CCF357100D9C02B /* GitHubDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GitHubDemoUITests.xctest; path = "/Users/kingchhum/Desktop/TACubstart/Spring 2025/Lectures/API/GitHubDemo/build/Debug-iphoneos/GitHubDemoUITests-Runner.app/PlugIns/GitHubDemoUITests.xctest"; sourceTree = "<absolute>"; };
+		1C40EA002EC26BCD00A6A7D2 /* GitHubDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C40EA012EC26BCD00A6A7D2 /* GitHubDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C40EA022EC26BCD00A6A7D2 /* GitHubDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -66,6 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				7F8A118D2CCF356F00D9C02B /* GitHubDemo */,
+				1C40EA002EC26BCD00A6A7D2 /* GitHubDemo.app */,
+				1C40EA012EC26BCD00A6A7D2 /* GitHubDemoTests.xctest */,
+				1C40EA022EC26BCD00A6A7D2 /* GitHubDemoUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,7 +94,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitHubDemo;
-			productReference = 7F8A118B2CCF356F00D9C02B /* GitHubDemo.app */;
+			productReference = 1C40EA002EC26BCD00A6A7D2 /* GitHubDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7F8A119C2CCF357100D9C02B /* GitHubDemoTests */ = {
@@ -111,7 +114,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitHubDemoTests;
-			productReference = 7F8A119D2CCF357100D9C02B /* GitHubDemoTests.xctest */;
+			productReference = 1C40EA012EC26BCD00A6A7D2 /* GitHubDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		7F8A11A62CCF357100D9C02B /* GitHubDemoUITests */ = {
@@ -131,7 +134,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitHubDemoUITests;
-			productReference = 7F8A11A72CCF357100D9C02B /* GitHubDemoUITests.xctest */;
+			productReference = 1C40EA022EC26BCD00A6A7D2 /* GitHubDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
