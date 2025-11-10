@@ -89,13 +89,28 @@ struct ContentView: View {
 func getUser(username: String) async throws -> GitUser {
     // TODO: Complete this function
     // Hint: The GitHub API endpoint format is
-    let endpoint = "https://api.github.com/users/sb16353"
-    let url = URL(string: endpoint)
-    else {
-            throw GitError.invalidURL
-        }
-
-
+    let endpoint = "https://api.github.com/users/\(username)"
+    
+    guard let url = URL(string: endpoint) else {
+        throw GitError.invalidURL
+    }
+    
+    let (data, response) = try await URLSession.shared.data(from: url)
+    
+    guard let httpResponse = response as? HTTPURLResponse,
+          httpResponse.statusCode == 200 else {
+        throw GitError.invalidResponse
+    }
+    
+    let decoder = JSONDecoder()
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    
+    do {
+        let decodedUser = try decoder.decode(GitUser.self, from: data)
+        return decodedUser
+    } catch {
+        throw GitError.invalidData
+    }
 }
 
 // Model
