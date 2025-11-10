@@ -66,20 +66,36 @@ struct ContentView: View {
     // ViewModel
     func fetchUser() async {
         // TODO: Complete this function use try and catch blocks
+        isSearching = true
 
+                do {
+                    let fetchedUser = try await getUser(username: username)
+                    user = fetchedUser
+                } catch GitError.invalidURL {
+                    print("Invalid URL")
+                } catch GitError.invalidResponse {
+                    print("Invalid Response")
+                } catch GitError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    print("Unknown Error: \(error)")
+                }
 
-
+                isSearching = false
+            }
     }
-}
 
 //GET
 func getUser(username: String) async throws -> GitUser {
     // TODO: Complete this function
-    // Hint: The GitHub API endpoint format is "https://api.github.com/users/{username}"
-    let endpoint = ""
+    // Hint: The GitHub API endpoint format is
+    let endpoint = "https://api.github.com/users/sb16353"
+    let url = URL(string: endpoint)
+    else {
+            throw GitError.invalidURL
+        }
 
-    // Remove this placeholder return once you implement the function
-    return GitUser(login: "", avatarUrl: "", bio: "")
+
 }
 
 // Model
